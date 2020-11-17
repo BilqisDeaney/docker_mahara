@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mahara-web:
+    build: ./mahara
+    container_name: mahara_web
+    ports:
+      - "80:80"
+    volumes:
+      - ./siteroot:/siteroot
+  mahara-db:
+    container_name: mahara_db
+    image: postgres:9.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mahara
+      POSTGRES_USER: mahara_user
+    volumes: 
+      - 'mahara-db:/var/lib/postgresql'
+volumes:
+    mahara-db:
