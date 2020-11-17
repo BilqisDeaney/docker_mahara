@@ -3,5 +3,5 @@
 !docker-compose.yml
 !.gitignore
 !control
-!moodle-config
+!config.php
 !README.md
