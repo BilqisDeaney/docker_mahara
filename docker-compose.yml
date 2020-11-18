@@ -1,22 +1,43 @@
-version: '3'
+version: '3.4'
 
 services:
-  mahara-web:
-    build: ./mahara
-    container_name: mahara_web
-    ports:
-      - "80:80"
-    volumes:
-      - ./siteroot:/siteroot
   mahara-db:
-    container_name: mahara_db
     image: postgres:9.6
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
+    container_name: mahara-db
+    environment: 
       POSTGRES_DB: mahara
-      POSTGRES_USER: mahara_user
-    volumes: 
-      - 'mahara-db:/var/lib/postgresql'
+      POSTGRES_PASSWORD: mahara
+      POSTGRES_USER: mahara
+    volumes:
+      - mahara-db:/var/lib/postgresql/data
+    restart: always
+
+  mahara-redis:
+    image: redis:6.0
+    container_name: mahara-redis
+
+  mahara-elastic:
+    image: elasticsearch:6.8.12
+    container_name: mahara-elastic
+    environment:
+      discovery.type: single-node
+    volumes:
+      - mahara-elastic:/usr/share/elasticsearch/data
+  
+  mahara-web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: mahara-web
+    ports:
+      - "8000:80"
+    volumes:
+      - ./siteroot/htdocs:/var/www/html
+    restart: always
+    depends_on:
+      - mahara-db
+
 volumes:
-    mahara-db:
+  mahara-db:
+  mahara-web:
+  mahara-elastic:

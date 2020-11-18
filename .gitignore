@@ -1,7 +1,6 @@
 /*
-!/mahara
 !docker-compose.yml
+!Dockerfile
 !.gitignore
-!control
-!config.php
+!mahara-config
 !README.md
