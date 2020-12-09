@@ -45,9 +45,20 @@ RUN apt-get update && \
         php-zip \
         php-xml
 
+# Download Mahara
+RUN curl -LO https://launchpad.net/mahara/20.10/20.10.0/+download/mahara-20.10.0.tar.bz2 && \
+    tar --no-same-owner -xf mahara-20.10.0.tar.bz2 && \
+    rm mahara-20.10.0.tar.bz2 && \
+    rm -r /var/www/html/ && \
+    cp -a mahara-20.10.0/htdocs/ -T /var/www/html/ && \
+    rm -r mahara-20.10.0
+
 # make mahara data folder
-RUN mkdir -p /mahara/data && \
-    chmod 777 /mahara/data
+RUN install -o www-data -g www-data -d /mahara/data
+
+COPY mahara-config.php /var/www/html/config.php
+
 EXPOSE 80
+STOPSIGNAL SIGWINCH
 # Run apache to bring up Mahara
 CMD ["/usr/sbin/apache2ctl", "-DFOREGROUND"]

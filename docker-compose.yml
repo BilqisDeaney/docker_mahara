@@ -23,7 +23,7 @@ services:
       discovery.type: single-node
     volumes:
       - mahara-elastic:/usr/share/elasticsearch/data
-  
+
   mahara-web:
     build:
       context: ./
@@ -31,9 +31,6 @@ services:
     container_name: mahara-web
     ports:
       - "8000:80"
-    volumes:
-      - ./siteroot/htdocs:/var/www/html
-    restart: always
     depends_on:
       - mahara-db
 
