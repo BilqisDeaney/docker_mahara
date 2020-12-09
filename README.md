@@ -1,23 +1,9 @@
-# docker_mahara
-A mahara developent environment.
+A Mahara testing environment.
 
 ## Usage and install
-clone this repo
-```
-git clone git@github.com:ScottVerbeek/docker_mahara.git
-```
 
-clone your mahara repo into siteroot
-```
-git clone git@github.com:MaharaProject/mahara.git siteroot
-```
+Clone this repo, then start containers:
 
-copy config to htdocs
 ```
-cp mahara-config siteroot/htdocs/config.php
-```
-
-then start containers
-```
-docker-compose up 
+docker-compose up
 ```
